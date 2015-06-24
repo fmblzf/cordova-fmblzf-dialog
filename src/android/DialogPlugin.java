@@ -20,7 +20,7 @@ public class DialogPlugin extends CordovaPlugin {
 		// TODO Auto-generated method stub
 		JSONObject jsonObject = args.getJSONObject(0);
 		if ("showDialog".equals(action)) {
-			this.showDialog(jsonObject.getString("title"),jsonObject.getString("message"));
+			this.showDialog(jsonObject.getString("title"),jsonObject.getString("message"),jsonObject.getString("confirm"),jsonObject.getString("cancel"));
 			callbackContext.success();
 			return true;
 		} else {
@@ -29,11 +29,11 @@ public class DialogPlugin extends CordovaPlugin {
 		}
 	}
 
-	private void showDialog(String title, String message) {
+	private void showDialog(String title, String message,String confirm,String cancel) {
 		CordovaInterface cordova = this.cordova;
 		Dialog dialog = new AlertDialog.Builder(cordova.getActivity())
 				.setTitle(title).setMessage(message)
-				.setPositiveButton("确定", new OnClickListener() {
+				.setPositiveButton(confirm, new OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -41,7 +41,7 @@ public class DialogPlugin extends CordovaPlugin {
 						dialog.dismiss();
 					}
 				})
-				.setNegativeButton("取消", new OnClickListener() {
+				.setNegativeButton(cancel, new OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
